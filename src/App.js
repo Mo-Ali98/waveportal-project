@@ -11,6 +11,7 @@ export default function App() {
   const [allWaves, setAllWaves] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
 
   /**
    * Create a variable here that holds the contract address after you deploy!
@@ -123,7 +124,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAccount]);
 
-  const wave = async () => {
+  const wave = async (waveMessage) => {
     try {
       const { ethereum } = window;
 
@@ -141,7 +142,7 @@ export default function App() {
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
-        const waveTxn = await wavePortalContract.wave("Its Mohamed!");
+        const waveTxn = await wavePortalContract.wave(waveMessage);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -162,8 +163,19 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(message);
-    // ... submit to API or something
+    try {
+      //Check if message is empty
+      if (message === "") throw Error("Empty");
+
+      console.log(message);
+      setErrorMessage(false);
+      //send wave with custom message and clear text area
+      wave(message);
+      e.target.reset();
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(true);
+    }
   };
 
   return (
@@ -185,19 +197,17 @@ export default function App() {
                 name="message"
                 className="form-text"
                 placeholder="Enter your message..."
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => setMessage(e.target.value.trim())}
               ></textarea>
             </label>
 
-            <button className="waveButton" type="submit">
+            <button className="waveButton" type="submit" disabled={loading}>
               Wave at me!
             </button>
           </form>
+          {errorMessage && <p>Enter a valid message!</p>}
         </div>
 
-        <button className="waveButton" onClick={wave} disabled={loading}>
-          Wave at Me
-        </button>
         {/*
          * If there is no currentAccount render this button
          */}
