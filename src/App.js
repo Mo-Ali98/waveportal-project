@@ -201,7 +201,11 @@ export default function App() {
               ></textarea>
             </label>
 
-            <button className="waveButton" type="submit" disabled={loading}>
+            <button
+              className="waveButton"
+              type="submit"
+              disabled={loading || message === ""}
+            >
               Wave at me!
             </button>
           </form>
