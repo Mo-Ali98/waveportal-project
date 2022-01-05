@@ -203,7 +203,7 @@ export default function App() {
             <button
               className="waveButton"
               type="submit"
-              disabled={loading || !currentAccount.length || message === ""}
+              disabled={loading || message === ""}
             >
               Wave at me!
             </button>
