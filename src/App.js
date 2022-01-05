@@ -83,15 +83,8 @@ export default function App() {
           signer
         );
 
-        /*
-         * Call the getAllWaves method from your Smart Contract
-         */
         const waves = await wavePortalContract.getAllWaves();
 
-        /*
-         * We only need address, timestamp, and message in our UI so let's
-         * pick those out
-         */
         let wavesCleaned = [];
         waves.forEach((wave) => {
           wavesCleaned.push({
@@ -101,10 +94,20 @@ export default function App() {
           });
         });
 
-        /*
-         * Store our data in React State
-         */
         setAllWaves(wavesCleaned);
+
+        wavePortalContract.on("NewWave", (from, timestamp, message) => {
+          console.log("NewWave", from, timestamp, message);
+
+          setAllWaves((prevState) => [
+            ...prevState,
+            {
+              address: from,
+              timestamp: new Date(timestamp * 1000),
+              message: message,
+            },
+          ]);
+        });
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -158,9 +161,7 @@ export default function App() {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-    getAllWaves();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAccount]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
