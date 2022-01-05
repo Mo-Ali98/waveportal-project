@@ -185,27 +185,25 @@ export default function App() {
         <div className="header"> Hey there!</div>
 
         <div className="bio">
-          I am Mohamed, connect your Ethereum wallet and wave at me!
+          I am Mohamed, connect your Ethereum wallet and wave at me with a
+          message!
         </div>
 
         <div className="">
           <form className="formContainer" onSubmit={handleSubmit}>
-            <label className="label">
-              Message
-              <textarea
-                rows="5"
-                cols="50"
-                name="message"
-                className="form-text"
-                placeholder="Enter your message..."
-                onChange={(e) => setMessage(e.target.value.trim())}
-              ></textarea>
-            </label>
+            <textarea
+              rows="5"
+              cols="50"
+              name="message"
+              className="form-text"
+              placeholder="Enter your message..."
+              onChange={(e) => setMessage(e.target.value.trim())}
+            ></textarea>
 
             <button
               className="waveButton"
               type="submit"
-              disabled={loading || message === ""}
+              disabled={loading || !currentAccount.length || message === ""}
             >
               Wave at me!
             </button>
