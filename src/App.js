@@ -16,7 +16,7 @@ export default function App() {
   /**
    * Create a variable here that holds the contract address after you deploy!
    */
-  const contractAddress = "0xb04D26815687513E569c16152D27464FB5A71e13";
+  const contractAddress = "0x2362401Ed1DE68d3164916ACE827229eB1aC35D1";
   const contractABI = wavePortal.abi;
 
   /**
@@ -71,8 +71,9 @@ export default function App() {
   };
 
   const getAllWaves = async () => {
+    const { ethereum } = window;
+
     try {
-      const { ethereum } = window;
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -112,17 +113,6 @@ export default function App() {
     }
   };
 
-  /*
-   * This runs our function when the page loads.
-   */
-
-  useEffect(() => {
-    checkIfWalletIsConnected();
-    getAllWaves();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAccount]);
-
   const wave = async (waveMessage) => {
     try {
       const { ethereum } = window;
@@ -141,7 +131,9 @@ export default function App() {
         let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
-        const waveTxn = await wavePortalContract.wave(waveMessage);
+        const waveTxn = await wavePortalContract.wave(waveMessage, {
+          gasLimit: 300000,
+        });
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -159,6 +151,16 @@ export default function App() {
       setLoading(false);
     }
   };
+
+  /*
+   * This runs our function when the page loads.
+   */
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+    getAllWaves();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentAccount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
