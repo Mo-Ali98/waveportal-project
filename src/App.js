@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
-import abi from "./utils/WavePortal.json";
+import wavePortal from "./utils/WavePortal.json";
 
 export default function App() {
   /*
@@ -16,9 +16,8 @@ export default function App() {
   /**
    * Create a variable here that holds the contract address after you deploy!
    */
-  const contractAddress = "0x04AE147F2B7035f9D15095aDAe0A21cFD3C8b7D8";
-
-  const contractABI = abi.abi;
+  const contractAddress = "0xb04D26815687513E569c16152D27464FB5A71e13";
+  const contractABI = wavePortal.abi;
 
   /**
    * Implement your connectWallet method here
