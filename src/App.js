@@ -161,6 +161,7 @@ export default function App() {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+    getAllWaves();
   }, []);
 
   const handleSubmit = (e) => {
@@ -183,11 +184,12 @@ export default function App() {
   return (
     <div className="mainContainer">
       <div className="dataContainer">
-        <div className="header"> Hey there!</div>
+        <span className="header"> Hey there!</span>
 
         <div className="bio">
-          I am Mohamed, connect your Ethereum wallet and wave at me with a
-          message!
+          I am Mohamed, connect your Ethereum wallet on the{" "}
+          <span style={{ fontWeight: "500" }}>Rinkeby Test Network </span> and
+          wave at me with a message!
         </div>
 
         <div className="">
@@ -216,21 +218,14 @@ export default function App() {
          * If there is no currentAccount render this button
          */}
         {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
+          <button className="connectWallet" onClick={connectWallet}>
             Connect Wallet
           </button>
         )}
 
         {allWaves.map((wave, index) => {
           return (
-            <div
-              key={index}
-              style={{
-                backgroundColor: "OldLace",
-                marginTop: "16px",
-                padding: "8px",
-              }}
-            >
+            <div key={index} className="waveMessageCard">
               <div>Address: {wave.address}</div>
               <div>Time: {wave.timestamp.toString()}</div>
               <div>Message: {wave.message}</div>
