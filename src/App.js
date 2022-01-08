@@ -144,12 +144,11 @@ export default function App() {
 
         count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
-        getAllWaves();
       } else {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     } finally {
       setLoading(false);
     }
@@ -208,7 +207,7 @@ export default function App() {
               type="submit"
               disabled={loading || message === ""}
             >
-              Wave at me!
+              {loading ? "Waving...." : "Wave at me!"}
             </button>
           </form>
           {errorMessage && <p>Enter a valid message!</p>}
