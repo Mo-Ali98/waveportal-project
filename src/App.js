@@ -9,6 +9,7 @@ export default function App() {
    */
   const [currentAccount, setCurrentAccount] = useState("");
   const [allWaves, setAllWaves] = useState([]);
+  const [waveLength, setWaveLength] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
@@ -108,6 +109,9 @@ export default function App() {
             },
           ]);
         });
+
+        let count = await wavePortalContract.getTotalWaves();
+        setWaveLength(count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -161,7 +165,8 @@ export default function App() {
   useEffect(() => {
     checkIfWalletIsConnected();
     getAllWaves();
-  }, []);
+    // eslint-disable-next-line
+  }, [waveLength]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -220,6 +225,12 @@ export default function App() {
           <button className="connectWallet" onClick={connectWallet}>
             Connect Wallet
           </button>
+        )}
+
+        {waveLength > 0 && (
+          <p style={{ textAlign: "center" }}>
+            There has been a total of {waveLength} waves!
+          </p>
         )}
 
         {allWaves.map((wave, index) => {
