@@ -153,6 +153,9 @@ export default function App() {
       }
     } catch (error) {
       console.log(error.message);
+      alert(
+        "Looks like the transaction failed. If you have recently waved, please wait 15mins to wave again :)"
+      );
     } finally {
       setLoading(false);
     }
