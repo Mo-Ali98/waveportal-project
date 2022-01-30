@@ -1,6 +1,5 @@
 body {
   background: linear-gradient(270deg, #c9d6ff, #e2e2e2);
-  background-size: 600% 600%;
 
   -webkit-animation: buttonAnimation 20s ease infinite;
   animation: buttonAnimation 20s ease infinite;

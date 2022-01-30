@@ -194,7 +194,7 @@ export default function App() {
         <span className="header"> Hey there!</span>
 
         <div className="bio">
-          I am Mohamed, connect your Ethereum wallet on the{" "}
+          Mohamed here, connect your Ethereum wallet on the{" "}
           <span style={{ fontWeight: "500" }}>Rinkeby Test Network </span> and
           wave at me with a message!
         </div>
@@ -215,7 +215,7 @@ export default function App() {
               type="submit"
               disabled={loading || message === ""}
             >
-              {loading ? "Waving...." : "Wave at me!"}
+              {loading ? "Waving...." : "Wave at me! 👋"}
             </button>
           </form>
           {errorMessage && <p>Enter a valid message!</p>}
@@ -232,7 +232,7 @@ export default function App() {
 
         {waveLength > 0 && (
           <p style={{ textAlign: "center" }}>
-            There has been a total of {waveLength} waves!
+            There has been a total of {waveLength} 👋!
           </p>
         )}
 
